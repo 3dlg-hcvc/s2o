@@ -4,3 +4,6 @@
 [submodule "Helper3D"]
 	path = Helper3D
 	url = git@github.com:diliash/Helper3D.git
+[submodule "internal_pg"]
+	path = internal_pg
+	url = git@github.com:3dlg-hcvc/internal_pg.git
