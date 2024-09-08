@@ -1,0 +1,3 @@
+[submodule "minsu3d"]
+	path = minsu3d
+	url = git@github.com:diliash/minsu3d.git
