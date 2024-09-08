@@ -7,3 +7,6 @@
 [submodule "internal_pg"]
 	path = internal_pg
 	url = git@github.com:3dlg-hcvc/internal_pg.git
+[submodule "Mask3D"]
+	path = Mask3D
+	url = git@github.com:3dlg-hcvc/Mask3D.git
