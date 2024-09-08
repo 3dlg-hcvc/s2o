@@ -1,0 +1,1 @@
+from .rule_motion_predictor import RuleMotionPredictor
