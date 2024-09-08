@@ -1,3 +1,6 @@
 [submodule "minsu3d"]
 	path = minsu3d
 	url = git@github.com:diliash/minsu3d.git
+[submodule "Helper3D"]
+	path = Helper3D
+	url = git@github.com:diliash/Helper3D.git
