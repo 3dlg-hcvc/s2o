@@ -12,8 +12,6 @@ from tqdm import tqdm
 sys.path.append("../..")
 import pygltftoolkit as pygltk
 
-PROCESS_NUM = 10
-
 
 def save_h5(output_path, num_models, results):
     h5file = h5py.File(f"{output_path}/downsample.h5", "w")
