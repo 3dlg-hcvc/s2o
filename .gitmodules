@@ -10,3 +10,6 @@
 [submodule "Mask3D"]
 	path = Mask3D
 	url = git@github.com:3dlg-hcvc/Mask3D.git
+[submodule "OC-cost"]
+	path = OC-cost
+	url = git@github.com:3dlg-hcvc/OC-cost.git
