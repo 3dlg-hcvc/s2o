@@ -9,7 +9,7 @@ import h5py
 import numpy as np
 from tqdm import tqdm
 
-sys.path.append("../..")
+sys.path.append("../../../../proj-opmotion")
 import pygltftoolkit as pygltk
 
 
@@ -191,14 +191,15 @@ if __name__ == "__main__":
 
     print("Loading and starting sampling")
 
-    split = "val"
-    model_ids = list(data_json[split].keys())
-    for model_id in tqdm(model_ids):
-        print(model_id)
+    splits = ["train", "val"]
+    for split in splits:
+        model_ids = list(data_json[split].keys())
+        for model_id in tqdm(model_ids):
+            print(model_id)
 
-        start = time.time()
-        raw_results[model_id] = sample_model(model_id, args.input_path, args.precomputed_path, args.vertices)
-        print(str(time.time() - start) + "\n")
+            start = time.time()
+            raw_results[model_id] = sample_model(model_id, args.input_path, args.precomputed_path, args.vertices)
+            print(str(time.time() - start) + "\n")
 
     print("Getting sampling results")
 
