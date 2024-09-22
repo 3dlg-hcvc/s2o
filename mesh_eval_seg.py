@@ -86,7 +86,7 @@ def segment_weighted_error(args):
         triangle_areas = np.asarray([triangle_area_by_coords(triangle) for triangle in gltf.vertices[gltf.faces]])
 
         for instance_id in np.unique(gt['instance']):
-            gt_segm_triangles = gt['instance'][gt['instance'] == instance_id]
+            gt_segm_triangles = np.where(gt['instance'] == instance_id)[0]
             gt_sem_label = gt['semantic'][gt['instance'] == instance_id][0]
 
             if gt_sem_label not in gt_area_per_class.keys():
@@ -96,12 +96,12 @@ def segment_weighted_error(args):
                 gt_area_per_class[gt_sem_label] += triangle_areas[triangleidx]
 
         for instance_id in np.unique(gt['instance']):
-            gt_segm_triangles = gt['instance'][gt['instance'] == instance_id]
+            gt_segm_triangles = np.where(gt['instance'] == instance_id)[0]
             gt_sem_label = gt['semantic'][gt['instance'] == instance_id][0]
             semantic_error = 0.0
 
-            for idx, triangleidx in enumerate(gt_segm_triangles):
-                pred_sem_label = pred['semantic'][idx]
+            for triangleidx in gt_segm_triangles:
+                pred_sem_label = pred['semantic'][triangleidx]
                 face_area = triangle_areas[triangleidx]
                 err_val = 0.0
                 if gt_sem_label == pred_sem_label:
@@ -123,7 +123,6 @@ def segment_weighted_error(args):
                 acc_error_per_class[key] += scene_error_per_class[key]
             else:
                 acc_error_per_class[key] = scene_error_per_class[key]
-
         acc_error += scene_error
     acc_error /= n_scenes
     print("Segment-Weighted Accuracy Per Class:")

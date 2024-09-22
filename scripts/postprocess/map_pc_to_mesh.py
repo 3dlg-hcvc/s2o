@@ -301,7 +301,7 @@ if __name__ == "__main__":
             model_ids = np.asarray(f['model_ids'][:])
             model_id_idx_map = {model_id.decode('utf-8'): idx for idx, model_id in enumerate(model_ids)}
             idx = model_id_idx_map[args.id]
-            face_indices = np.asarray(f['face_indexes'][idx])
+            face_indices = np.asarray(f['pygltk_face_indexes'][idx])
             vertex_ids = np.asarray(f['vertex_ids'][idx])
             gltf = pygltk.load(f"{args.data_path}/{args.id}/{args.id}.glb")
         map_single_mesh(args, face_indices, vertex_ids, gltf)
