@@ -206,11 +206,11 @@
             </div>
             <p>
               We start with a subset of PartNet-Mobility, the most commonly used dataset of articulated objects, curating a split of openable contatiners (PM-Openable).
-              However, we find that it to be self-repetetive, exhibiting limited complexity and realism.
-              To address this, we introduce a new dataset, Articulated Containters Dataset (ACD), which is more diverse and challenging. 
+              However, we find it to be self-repetetive, as well as exhibiting limited complexity and realism.
+              To address this, we introduce Articulated Containters Dataset (ACD), which is more diverse and challenging. 
             </p>
             <p>
-              ACD is curated by selecting {number} of shapes from ABO, HSSD and 3D-FUTURE datasets, and manually annotating the parts and articulation parameters.
+              ACD is curated by selecting 354 shapes from ABO, HSSD and 3D-FUTURE datasets, and manually annotating the parts and articulation parameters.
               This dataset features more complex objects with higher number of parts per object, part arrangements and articulations, diverse object categories, and serves as a more realistic testbed for the S2O task.
               ACD objects rarely feature any interior geometry as they were designed to be static, however we employ our interior completion heuristic to prepare simulator-ready assets.
             </p>
@@ -227,11 +227,11 @@
               </p>
               <p>
                 For part segmentation, we benchmark a number of SOTA methods across 3 modalities: meshes (MeshWalker), point clouds (PointGroup, Mask3D) and images (OPDFormer). 
-                For images and point clouds, we use a set fo heuristics to map predictions back onto mesh.
-                We also benchmark different choices of backbones for PointGroup (U-Net, Swin3D, PointNeXt) and propose an improvement for our best PointGroup with PointNeXt setup. See paper for more details.
+                For images and point clouds, we use a set of heuristics to map predictions back onto mesh.
+                We also benchmark different choices of backbones for PointGroup (U-Net, Swin3D, PointNeXt) and propose an architecture improvement for our best PointGroup with PointNeXt setup. See paper for more details.
               </p>
               <p>
-                For motion prediction, we propose a simple yet effective heuristic. Shape2Motion and OPDFormer are used as baselines.
+                For motion prediction, we propose a simple yet effective heuristic.
               </p>
               <p>
                 For interior geometry completion, we propose a simple heuristic that targets drawer box completion.
@@ -269,7 +269,7 @@
               </div>
             </div>
             <p>
-              Here we show motion prediction results on PM-Openable and ACD datasets with our heurristic mobility predicitons.
+              Here we show motion prediction results on PM-Openable and ACD datasets with our heuristic mobility predicitons.
               Quantitatively, we find that our heuristic outperforms OPDFormer provided the same segmentation.
               Overall, mobility prediction results depend heavily on the segmetnation quality. 
               On PM-openable, resutls are satisfactory as PG+PX+FPN* outputs good segmentation. On ACD, the segmetnation results make mobility prediction challenging.
@@ -289,13 +289,6 @@
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><code>
-        @inproceedings{liu2024cage,
-            title={CAGE: Controllable Articulation GEneration},
-            author={Liu, Jiayi and Tam, Hou In Ivan and Mahdavi-Amiri, Ali and Savva, Manolis},
-            booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-            pages={17880--17889},
-            year={2024}
-        }
       </code></pre>
     </div>
   </section>
