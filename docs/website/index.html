@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="S2O: Static to Openable Enhancement for Articulated 3D Objects">
+  <meta name="keywords" content="S2O: Static to Openable Enhancement for Articulated 3D Objects, 3D Segmenataion, S2O, Articulated Containers Dataset, ACD, 3D Articulation, Furniture GLB, 3D Generation, 3D Mesh, Mesh segmentation, Mesh articulation, Articulated objects dataset, Articulated furniture">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>S2O: Static to Openable Enhancement for Articulated 3D Objects</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G85PZGL346"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-G85PZGL346');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">S2O: Static to Openable Enhancement for Articulated 3D Objects</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="">Denys Iliash</a>,</span>
+              <span class="author-block">
+                <a href="https://jianghanxiao.github.io">Hanxiao Jiang</a>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.ca/citations?user=scUaE38AAAAJ&hl=en">Yiming Zhang</a>,</span>
+              <span class="author-block">
+                <a href="https://msavva.github.io/">Manolis Savva</a>,</span>
+              <span class="author-block">
+                <a href="https://angelxuanchang.github.io">Angel X. Chang</a></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Simon Fraser University</span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block" style="color:#a771ac">Pre-print</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+                <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv (Coming soon)</span>
+                  </a>
+                </span>
+                <!-- Video Link. -->
+                <span class="link-block">
+                  <a href="https://youtu.be/mpgYcXj9shU" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href=""
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Dataset Link. -->
+                <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="static/images/hf-logo-pirate.png" alt="Hugging Face Icon">
+                  </span>
+                  <span>Data (Coming soon)</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Paper video. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <!-- <h2 class="title is-3">Video</h2> -->
+          <div class="publication-video">
+            <iframe src="https://youtu.be/mpgYcXj9shU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <!--<img src="./static/images/placeholder.png" class="interpolation-image" alt="Teaser." style="max-width: 100%;"/>-->
+          </div>
+        </div>
+      </div>
+      <!--/ Paper video. -->
+    </div>  
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">   
+      <!-- Abstract. --> 
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-centered">
+          <!-- <h2 class="title is-3">Abstract</h2> -->
+          <div class="container is-max-desktop">
+            <div class="column has-text-centered">
+              <!-- <img src="./static/images/teaser.webp" class="interpolation-image crop_grey_line" alt="Teaser." / style="max-width: 100%;"> -->
+              <div class="crop_grey_line">
+                <video autoplay playsinline muted loop > <source src="./static/images/s2o_release.mp4"> </video>
+                <!--<img src="./static/images/teaser.png" class="interpolation-image" alt="Teaser." style="max-width: 100%;"/>-->
+              </div>
+            </div>
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              Despite much progress in large 3D datasets there are currently few interactive 3D object datasets, and their scale is limited due to the manual effort required in their construction.
+              We introduce the static to openable (S2O) task which creates interactive articulated 3D objects from static counterparts through openable part detection, motion prediction, and interior geometry completion.
+            </p>
+            <p>
+              We formulate a unified framework to tackle this task, and curate a challenging dataset of openable 3D objects that serves as a test bed for systematic evaluation.
+              Our experiments benchmark methods from prior work and simple yet effective heuristics for the S2O task.
+            </p>
+            <p>
+              We find that turning static 3D objects into interactively openable counterparts is possible but that all methods struggle to generalize to realistic settings of the task, and we highlight promising future work directions.
+            </p>
+          </div>
+          
+        </div>
+      </div>
+      <!--/ Abstract. -->
+
+      
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <div class="center-container">
+              <h3 class="title is-3">Overview</h3>
+              <!-- <img src="./static/images/pipeline.webp" class="interpolation-image crop_grey_line" alt="method overview" /> -->
+              <div class="crop_grey_line">
+                <video autoplay playsinline muted loop  >
+                  <source src="./static/images/pipeline.mov">
+                </video>
+              </div>
+            </div>
+            <p>
+              The input to our static to openable (S2O) task is a static 3D triangle mesh of an openable container. 
+              The output is an articulated 3D object that can be interactively opened and closed, with explicitely predicted part segmentation and articulation parameters.
+              We distinguish 3 part types: drawers, doors and lids.
+            </p>
+            <div class="center-container">
+              <h4 class="title is-4">Data</h4>
+              <!-- <img src="./static/images/attention.webp" class="interpolation-image crop_grey_line" alt="attention modules" style="max-width: 70%;"/> -->
+              <div class="crop_grey_line">
+                <img src="./static/images/data.png" class="interpolation-image" alt="data overview" style="max-width: 100%;"/>
+              </div>
+            </div>
+            <p>
+              We start with a subset of PartNet-Mobility, the most commonly used dataset of articulated objects, curating a split of openable contatiners (PM-Openable).
+              However, we find that it to be self-repetetive, exhibiting limited complexity and realism.
+              To address this, we introduce a new dataset, Articulated Containters Dataset (ACD), which is more diverse and challenging. 
+            </p>
+            <p>
+              ACD is curated by selecting {number} of shapes from ABO, HSSD and 3D-FUTURE datasets, and manually annotating the parts and articulation parameters.
+              This dataset features more complex objects with higher number of parts per object, part arrangements and articulations, diverse object categories, and serves as a more realistic testbed for the S2O task.
+              ACD objects rarely feature any interior geometry as they were designed to be static, however we employ our interior completion heuristic to prepare simulator-ready assets.
+            </p>
+            <div class="crop_grey_line">
+              <video autoplay playsinline muted loop  >
+                <source src="./static/images/acd.mov">
+              </video>
+            </div>
+            <div class="center-container">
+              <h4 class="title is-4">Pipeline</h4>
+            </div>
+              <p>
+                Our pipeline consists of three main components: openable part segmentation, motion prediction, and interior geometry completion.
+              </p>
+              <p>
+                For part segmentation, we benchmark a number of SOTA methods across 3 modalities: meshes (MeshWalker), point clouds (PointGroup, Mask3D) and images (OPDFormer). 
+                For images and point clouds, we use a set fo heuristics to map predictions back onto mesh.
+                We also benchmark different choices of backbones for PointGroup (U-Net, Swin3D, PointNeXt) and propose an improvement for our best PointGroup with PointNeXt setup. See paper for more details.
+              </p>
+              <p>
+                For motion prediction, we propose a simple yet effective heuristic. Shape2Motion and OPDFormer are used as baselines.
+              </p>
+              <p>
+                For interior geometry completion, we propose a simple heuristic that targets drawer box completion.
+              </p>
+        </div> 
+      </div>  
+    </div> 
+          <!-- Methods. -->
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+          <!-- Results. -->
+          <div class="content has-text-justified">
+            <div class="center-container">
+              <h3 class="title is-3">Results</h3>
+              <h4 class="title is-4">Segmentation</h4>
+            </div>
+            <img src="./static/images/segmentation-results.png" class="interpolation-image" alt="cond_graph"/>
+            <p>
+              Here we show openable part segmentation results, drawers are visualized in <span style="color: #1f77b4;">blue</span>, doors in <span style="color: #ff7f0e;">orange</span>. We note that the task remains challenging for SOTA methods, especially on more realistic and challenging ACD shapes.
+              This is also attributed to missing interiors in ACD, while they are present in the training PM-Openable data.
+              We find that point cloud based methods perform the best on average, with PointGroup with PointNeXt (PG+PX+FPN*) being the best performing method.
+
+            </p>
+            <div class="center-container">
+              <h4 class="title is-4">Motion Prediction</h4>
+            </div>
+            <div class="center-container">
+              <!-- <img src="./static/images/ood.webp" class="interpolation-image crop_grey_line" alt="ood_graph" style="max-width: 90%"/> -->
+              <div class="crop_grey_line">
+                <video autoplay playsinline muted loop style="max-width: 90%;" >
+                  <source src="./static/images/pmopenmob.mov">
+                </video>
+              </div>
+            </div>
+            <p>
+              Here we show motion prediction results on PM-Openable and ACD datasets with our heurristic mobility predicitons.
+              Quantitatively, we find that our heuristic outperforms OPDFormer provided the same segmentation.
+              Overall, mobility prediction results depend heavily on the segmetnation quality. 
+              On PM-openable, resutls are satisfactory as PG+PX+FPN* outputs good segmentation. On ACD, the segmetnation results make mobility prediction challenging.
+            </p>
+            <div class="center-container">
+              <video autoplay playsinline muted loop style="max-width: 90%;" >
+                <source src="./static/images/acdmob.mov">
+              </video>
+            </div>
+          </div>
+          <!--/ Results. -->
+      </div>
+    </section>
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+        @inproceedings{liu2024cage,
+            title={CAGE: Controllable Articulation GEneration},
+            author={Liu, Jiayi and Tam, Hou In Ivan and Mahdavi-Amiri, Ali and Savva, Manolis},
+            booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+            pages={17880--17889},
+            year={2024}
+        }
+      </code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="">
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a class="icon-link" href="https://github.com/3dlg-hcvc/cage" class="external-link" disabled>
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+              The template is borrowed from <a href="https://nerfies.github.io/">Nerfies</a>.
+              Please check out their great work if you find it helpful as well.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
