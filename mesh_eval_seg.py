@@ -4,11 +4,9 @@ import os
 import sys
 
 import numpy as np
+import pygltftoolkit as pygltk
 import sklearn
 from tqdm import tqdm
-
-sys.path.append("../../proj-opmotion")
-import pygltftoolkit as pygltk
 
 
 def triangle_area_by_coords(coords):

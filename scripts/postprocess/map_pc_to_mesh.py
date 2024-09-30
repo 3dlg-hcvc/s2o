@@ -14,7 +14,7 @@ import trimesh
 from plyfile import PlyData, PlyElement
 from tqdm import tqdm
 
-sys.path.append("../../../../proj-opmotion")
+sys.path.append("../..")
 
 import pygltftoolkit as pygltk
 

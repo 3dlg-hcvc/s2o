@@ -9,14 +9,12 @@ from glob import glob
 
 import numpy as np
 import open3d as o3d
+import pygltftoolkit as pygltk
 import trimesh
 from scipy.optimize import linear_sum_assignment
 from tqdm import tqdm
 
 from opmotion import Evaluator
-
-sys.path.append("../../proj-opmotion")
-import pygltftoolkit as pygltk
 
 # Set the random seed
 RANDOM_SEED = 521

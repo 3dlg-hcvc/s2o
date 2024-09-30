@@ -13,3 +13,6 @@
 [submodule "OC-cost"]
 	path = OC-cost
 	url = git@github.com:3dlg-hcvc/OC-cost.git
+[submodule "pygltftoolkit"]
+	path = pygltftoolkit
+	url = git@github.com:3dlg-hcvc/pygltftoolkit.git

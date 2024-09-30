@@ -5,10 +5,8 @@ import os
 import sys
 
 import numpy as np
-from tqdm import tqdm
-
-sys.path.append("../../proj-opmotion")
 import pygltftoolkit as pygltk
+from tqdm import tqdm
 
 
 def compute_bbox_iou(aabb1, aabb2):
@@ -138,7 +136,7 @@ def precision_recall_f1(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--predict_dir', type=str, required=True)
+    parser.add_argument('-p', 'm', type=str, required=True)
     parser.add_argument('-g', '--gt_path', type=str, required=True)
     parser.add_argument('-o', '--output_dir', type=str, required=True)
     parser.add_argument('--iou', default=0.5, type=float)
