@@ -51,7 +51,7 @@ To run heuristic motion prediction:
     python motion_inference.py --pred_path {path/to/mapped/meshes/output} --output_path {path/to/mapped/meshes/output/motion} --export
 
 ## Evaluation
-PC metrics are obtained from minsu3d eval.py and OC-cost demo.py, follow instructions from the submodules to 
+PC metrics are obtained from minsu3d eval.py and OC-cost demo.py, follow the instructions from the submodules. For mesh segmentation and motion prediction evaluation:
 
     # GT is obtained from running map_pc_to_mesh with --gt flag
     python mesh_eval.py --predict_dir {path/to/mapped/meshes/output} --gt_path {path/to/preprocessed/gt} --output_dir {dir/for/logged/metrics} --data_json {path/to/split/json} --glb_path {path/to/processed_mesh}
