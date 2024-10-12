@@ -108,7 +108,7 @@ def save_nonindexed_geometry(mesh: trimesh.Trimesh, save_path: str, export_type:
         face_data = np.array([(f, c[0], c[1], c[2], c[3]) 
                             for f, c in zip(nonindexed_faces, face_colors)],
                             dtype=[('vertex_indices', 'i4', (3,)),
-                                    ('red', 'u1'), ('green', 'u1'), ('blue', 'u1'), ('alpha', 'u1')])
+                                   ('red', 'u1'), ('green', 'u1'), ('blue', 'u1'), ('alpha', 'u1')])
 
         vertex_element = PlyElement.describe(vertex_data, 'vertex')
         face_element = PlyElement.describe(face_data, 'face')
@@ -178,7 +178,6 @@ def generate_gt(args):
         for part_idx in np.unique(gltf.segmentation_map):
             segmentation_dict[part_idx] = {'semantic': S2O_SEM_REF[gltf.segmentation_parts[part_idx].label], 'conf': 1.0}
         sample_and_export_points(nonindexed_mesh, gltf.segmentation_map, segmentation_dict, args)
-
 
 
 def map_single_mesh(args, face_indices, vertex_ids):
