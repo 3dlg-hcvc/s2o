@@ -16,3 +16,6 @@
 [submodule "pygltftoolkit"]
 	path = pygltftoolkit
 	url = git@github.com:3dlg-hcvc/pygltftoolkit.git
+[submodule "MeshWalker"]
+	path = MeshWalker
+	url = git@github.com:diliash/MeshWalker.git
