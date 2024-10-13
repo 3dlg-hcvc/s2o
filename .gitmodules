@@ -19,3 +19,6 @@
 [submodule "MeshWalker"]
 	path = MeshWalker
 	url = git@github.com:diliash/MeshWalker.git
+[submodule "shape2motion-pytorch"]
+	path = shape2motion-pytorch
+	url = git@github.com:diliash/shape2motion-pytorch.git
