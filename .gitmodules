@@ -22,3 +22,6 @@
 [submodule "shape2motion-pytorch"]
 	path = shape2motion-pytorch
 	url = git@github.com:diliash/shape2motion-pytorch.git
+[submodule "Pointcept"]
+	path = Pointcept
+	url = git@github.com:diliash/Pointcept.git
