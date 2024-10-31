@@ -1,6 +1,6 @@
 # S2O: Static to Openable Enhancement for Articulated 3D Objects
 
-Denys Iliash<sup>1</sup>,
+[Denys Iliash](https://scholar.google.com/citations?user=guExFlYAAAAJ&hl=en&oi=ao)<sup>1</sup>,
 [Hanxiao Jiang](https://jianghanxiao.github.io)<sup>2</sup>,
 [Yiming Zhang](https://scholar.google.ca/citations?user=scUaE38AAAAJ&hl=en)<sup>1</sup>,
 [Manolis Savva](https://msavva.github.io)<sup>1</sup>,

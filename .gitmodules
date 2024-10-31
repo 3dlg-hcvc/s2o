@@ -25,3 +25,6 @@
 [submodule "Pointcept"]
 	path = Pointcept
 	url = git@github.com:diliash/Pointcept.git
+[submodule "OPDMulti"]
+	path = OPDMulti
+	url = git@github.com:diliash/OPDMulti.git
