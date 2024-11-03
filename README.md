@@ -62,3 +62,13 @@ PC metrics are obtained from minsu3d eval.py and OC-cost demo.py, follow the ins
     # For motion evaluation
     python motion_eval.py --predict_dir {path/to/mapped/meshes/output} --output_dir {dir/for/logged/metrics} --data_json {path/to/split/json} --glb_path {path/to/processed_mesh}
     
+## Citation
+
+```
+@article{iliash2024s2o,
+  title={{S2O}: Static to openable enhancement for articulated {3D} objects},
+  author={Iliash, Denys and Jiang, Hanxiao and Zhang, Yiming and Savva, Manolis and Chang, Angel X},
+  journal={arXiv preprint arXiv:2409.18896},
+  year={2024}
+}
+```
