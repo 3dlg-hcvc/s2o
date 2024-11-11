@@ -18,7 +18,7 @@ This repo contains the code for S2O paper. Data can be found on [HuggingFace](ht
 ## Installation
     git clone --recursive git@github.com:3dlg-hcvc/s2o.git
       
-    conda create -f environment.yml
+    conda env create -f environment.yml
     conda activate s2o
 
 Additionally, follow instructions in the submodules you would like to use in order to install required libraries and build some dependencies from source.
