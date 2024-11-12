@@ -48,12 +48,12 @@ We explore different methods (point cloud based, image based, and mesh based) fo
 
 | Type | Method | code  | weights |  F1 on PM-Openable | F1 on ACD | 
 |--------|------|-------|-------|-----|----|
-| PC | PointGroup + U-Net | [minusu3d](minsu3d) |  [pg_unet.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_unet.ckpt) | 21.1 | 4.9 | 
-| PC | PointGroup + Swin3D | [Pointcept](Pointcept) |  [pg_swin3d.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_swin3d.pth)  |  29.6 | 9.4 |       
-| PC | PointGroup + PointNeXT + FPN | [internal_pg](internal_pg) |  [pg_px_fpn.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_px_fpn.ckpt)  | 78.5 | 13.3 |        
-| PC | Mask3D | [Mask3D](Mask3D) |  [mask3d.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/mask3d.ckpt) | 42.9 | 4.8 |
-| Mesh | MeshWalker | [MeshWalker](MeshWalker) | [meshwalker.keras](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/meshwalker.keras) | 0.8 | 0.7 |
-| Image | OPDFormer | [OPDFormer](OPDFormer) |  [opdformer_p.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/opdformer_p.pth) | 18.6 |  7.8 |
+| PC | [PointGroup](https://github.com/dvlab-research/PointGroup) + U-Net | [minusu3d](minsu3d) |  [pg_unet.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_unet.ckpt) | 21.1 | 4.9 | 
+| PC | [PointGroup](https://github.com/dvlab-research/PointGroup) + [Swin3D](https://github.com/microsoft/Swin3D) | [Pointcept](Pointcept) |  [pg_swin3d.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_swin3d.pth)  |  29.6 | 9.4 |       
+| PC | [PointGroup](https://github.com/dvlab-research/PointGroup) + [PointNeXT](https://github.com/guochengqian/pointnext) + FPN | [internal_pg](internal_pg) |  [pg_px_fpn.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_px_fpn.ckpt)  | 78.5 | 13.3 |        
+| PC | [Mask3D](https://github.com/JonasSchult/Mask3D) | [Mask3D](Mask3D) |  [mask3d.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/mask3d.ckpt) | 42.9 | 4.8 |
+| Mesh | [MeshWalker](https://github.com/AlonLahav/MeshWalker) | [MeshWalker](MeshWalker) | [meshwalker.keras](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/meshwalker.keras) | 0.8 | 0.7 |
+| Image | [OPDFormer]([https://github.com/3dlg-hcvc/OPDMulti/tree/master](https://github.com/3dlg-hcvc/OPDMulti)) | [OPDMulti](OPDMulti) |  [opdformer_p.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/opdformer_p.pth) | 18.6 |  7.8 |
 
 
 For PC-based methods run:
