@@ -27,11 +27,17 @@ Additionally, follow instructions in the submodules you would like to use in ord
 
 Data and checkpoints can be found on [HuggingFace](https://huggingface.co/datasets/3dlg-hcvc/s2o). 
 
+Please request access.  After you are approved, you download the data with git lfs
+```
+git lfs install
+git clone git@hf.co:datasets/3dlg-hcvc/s2o
+```
+
 ## Inference
 For PC-based methods run:
 
     # Pre-processing
-    python scripts/preprocess/create_subset_points.py --data_path {path/to/pcd/downsample.h5} --dat_json {path/to/split/json}
+    python scripts/preprocess/create_subset_points.py --data_path {path/to/pcd/downsample.h5} --data_json {path/to/split/json}
     
     # For all PG methods convert to minsu3d format
     python scripts/preprocess/prepare_for_minsu3d.py --data_path {path/to/pcd-subset/downsample.h5} --data_json {path/to/split/json}
