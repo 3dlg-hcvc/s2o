@@ -84,6 +84,10 @@ To run heuristic motion prediction:
 
 ## Interior Completion
 
+- [ ] TODO: Provide instructions for interior completion
+- [ ] TODO: Provide instructions for exporting articulated mesh as GLB / URDF
+- [ ] TODO: Provide instructions for visualizing articulated mesh
+
 
 # Reproducing Experiments
 
