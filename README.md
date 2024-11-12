@@ -27,7 +27,7 @@ Additionally, follow instructions in the submodules you would like to use in ord
 
 Data and checkpoints can be found on [HuggingFace](https://huggingface.co/datasets/3dlg-hcvc/s2o). 
 
-Please request access.  After you are approved, you download the data with git lfs
+Please request access.  After you are approved, you can download the data with git lfs.
 ```
 git lfs install
 git clone git@hf.co:datasets/3dlg-hcvc/s2o
