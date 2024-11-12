@@ -12,6 +12,9 @@
 
 This repo contains the code for S2O paper. Data can be found on [HuggingFace](https://huggingface.co/datasets/3dlg-hcvc/s2o).
 
+In the Static to Openable (S2O) task, we aim to convert static meshes of container objects to articulated openable objects.
+
+We develop a three stage pipeline consisting of 1) part segmentation, 2) motion prediction, and 3) interior completion.
 
 <img src='docs/static/images/teaser.png'/>
 
@@ -33,13 +36,32 @@ git lfs install
 git clone git@hf.co:datasets/3dlg-hcvc/s2o
 ```
 
-## Inference
+# Running the Static to Openable Pipeline
+
+## Preparing your asset
+
+- [ ] TODO: Add instructions for point sampling a new asset and preparing it for segmentation
+
+## Part Segmentation
+
+We explore different methods (point cloud based, image based, and mesh based) for identifying openable parts and segmenting out the parts from the mesh.  
+
+| Type | Method | code  | weights |  F1 on PM-Openable | F1 on ACD | 
+|--------|------|-------|-------|-----|----|
+| PC | PointGroup + U-Net | [minusu3d](minsu3d) |  [pg_unet.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_unet.ckpt) | 21.1 | 4.9 | 
+| PC | PointGroup + Swin3D | [Pointcept](Pointcept) |  [pg_swin3d.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_swin3d.pth)  |  29.6 | 9.4 |       
+| PC | PointGroup + PointNeXT + FPN | [internal_pg](internal_pg) |  [pg_px_fpn.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_px_fpn.ckpt)  | 78.5 | 13.3 |        
+| PC | Mask3D | [Mask3D](Mask3D) |  [mask3d.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/mask3d.ckpt) | 42.9 | 4.8 |
+| Mesh | MeshWalker | [MeshWalker](MeshWalker) | [meshwalker.keras](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/meshwalker.keras) | 0.8 | 0.7 |
+| Image | OPDFormer | [OPDFormer](OPDFormer) |  [opdformer_p.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/opdformer_p.pth) | 18.6 |  7.8 |
+
+
 For PC-based methods run:
 
     # Pre-processing
     python scripts/preprocess/create_subset_points.py --data_path {path/to/pcd/downsample.h5} --data_json {path/to/split/json}
     
-    # For all PG methods convert to minsu3d format
+    # For all PointGroup methods convert to minsu3d format
     python scripts/preprocess/prepare_for_minsu3d.py --data_path {path/to/pcd-subset/downsample.h5} --data_json {path/to/split/json}
     
 Follow submodule instructions for inference. Then, for post-processing and mapping run:
@@ -52,9 +74,16 @@ Follow submodule instructions for inference. Then, for post-processing and mappi
     # Map full predictions to mesh, use --gt flag with this script to generate gt for evaluation
     python scripts/postprocess/map_pc_to_mesh.py --{path/to/full/predictions} --data_path {path/to/processed_mesh} --data_json {path/to/split/json} --sampled_data {path/to/pcd/downsample.h5} --output_dir {path/to/mapped/meshes/output}
 
+## Motion prediction
+
 To run heuristic motion prediction:
 
     python motion_inference.py --pred_path {path/to/mapped/meshes/output} --output_path {path/to/mapped/meshes/output/motion} --export
+
+## Interior Completion
+
+
+# Reproducing Experiments
 
 ## Evaluation
 PC metrics are obtained from minsu3d eval.py and OC-cost demo.py, follow the instructions from the submodules. For mesh segmentation and motion prediction evaluation:
@@ -67,6 +96,10 @@ PC metrics are obtained from minsu3d eval.py and OC-cost demo.py, follow the ins
 
     # For motion evaluation
     python motion_eval.py --predict_dir {path/to/mapped/meshes/output} --output_dir {dir/for/logged/metrics} --data_json {path/to/split/json} --glb_path {path/to/processed_mesh}
+
+## Training 
+
+- [ ] TODO: Provide training instructions
     
 ## Citation
 Please cite our work if you use S2O results/code or ACD dataset.
