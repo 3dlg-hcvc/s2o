@@ -130,7 +130,7 @@
         <div class="column is-four-fifths">
           <!-- <h2 class="title is-3">Video</h2> -->
           <div class="publication-video">
-            <iframe src="https://youtube.com/embed/mpgYcXj9shU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe src="https://youtube.com/embed/bmASbiiAv0E" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             <!--<img src="./static/images/placeholder.png" class="interpolation-image" alt="Teaser." style="max-width: 100%;"/>-->
           </div>
         </div>
@@ -161,7 +161,7 @@
             </p>
             <p>
               We formulate a unified framework to tackle this task, and curate a challenging dataset of openable 3D objects that serves as a test bed for systematic evaluation.
-              Our experiments benchmark methods from prior work and simple yet effective heuristics for the S2O task.
+              Our experiments benchmark methods from prior work, extended and improved methods, and simple yet effective heuristics for the S2O task.
             </p>
             <p>
               We find that turning static 3D objects into interactively openable counterparts is possible but that all methods struggle to generalize to realistic settings of the task, and we highlight promising future work directions.
@@ -226,12 +226,11 @@
                 Our pipeline consists of three main components: openable part segmentation, motion prediction, and interior geometry completion.
               </p>
               <p>
-                For part segmentation, we benchmark a number of SOTA methods across 3 modalities: meshes (MeshWalker), point clouds (PointGroup, Mask3D) and images (OPDFormer). 
+                For part segmentation, we benchmark a number of SOTA methods across 3 modalities: meshes (MeshWalker), point clouds (PointGroup, Mask3D) and images (OPDFormer). Finding that point cloud based methods work the best, we propose FPNGroup which further improves the segmentaiton.
                 For images and point clouds, we use a set of heuristics to map predictions back onto mesh.
-                We also benchmark different choices of backbones for PointGroup (U-Net, Swin3D, PointNeXt) and propose an architecture improvement for our best PointGroup with PointNeXt setup. See paper for more details.
               </p>
               <p>
-                For motion prediction, we propose a simple yet effective heuristic.
+                For motion prediction, we propose a simple yet effective heuristic, as well as an extension to our segmentation method, FPNGroupMot that predicts mobility parameters directly.
               </p>
               <p>
                 For interior geometry completion, we propose a simple heuristic that targets drawer box completion.
@@ -252,10 +251,9 @@
             </div>
             <img src="./static/images/segmentation-results.png" class="interpolation-image" alt="cond_graph"/>
             <p>
-              Here we show openable part segmentation results, drawers are visualized in <span style="color: #1f77b4;">blue</span>, doors in <span style="color: #ff7f0e;">orange</span>. We note that the task remains challenging for SOTA methods, especially on more realistic and challenging ACD shapes.
+              Here we show openable part segmentation results, drawers are visualized in <span style="color: #1f77b4;">blue</span>, doors in <span style="color: #ff7f0e;">orange</span>. We note that the task remains challenging, especially on more realistic and challenging ACD shapes.
               This is also attributed to missing interiors in ACD, while they are present in the training PM-Openable data.
-              We find that point cloud based methods perform the best on average, with PointGroup with PointNeXt (PG+PX+FPN*) being the best performing method.
-
+              We find that our FPNGroup outperforms the baselines, while adding a version of PM-Openable without interiors (PM-Openable-ext) to the training split improves the results further.
             </p>
             <div class="center-container">
               <h4 class="title is-4">Motion Prediction</h4>
@@ -264,25 +262,34 @@
               <!-- <img src="./static/images/ood.webp" class="interpolation-image crop_grey_line" alt="ood_graph" style="max-width: 90%"/> -->
               <div class="crop_grey_line">
                 <video autoplay playsinline muted loop style="max-width: 90%;" >
-                  <source src="./static/images/pmopenmob.mov">
+                  <source src="./static/images/newmot.mp4">
                 </video>
               </div>
             </div>
             <p>
-              Here we show motion prediction results on PM-Openable and ACD datasets with our heuristic mobility predicitons.
-              Quantitatively, we find that our heuristic outperforms OPDFormer provided the same segmentation.
+              Here we show motion prediction results on PM-Openable and ACD datasets with our heuristic mobility and learned predicitons.
+              Quantitatively, we find that our heuristic outperforms the learned method.
               Overall, mobility prediction results depend heavily on the segmetnation quality. 
-              On PM-openable, resutls are satisfactory as PG+PX+FPN* outputs good segmentation. On ACD, the segmetnation results make mobility prediction challenging.
+              On PM-openable, resutls are great with FPNGroup and our heuristic, due to the good segmentation quality and reasonable heuristic. On ACD, the segmetnation results make mobility prediction challenging.
             </p>
-            <div class="center-container">
-              <video autoplay playsinline muted loop style="max-width: 90%;" >
-                <source src="./static/images/acdmob.mov">
-              </video>
-            </div>
+          <div class="center-container">
+            <h4 class="title is-4">Interior completion</h4>
           </div>
+          <div class="center-container">
+            <img src="./static/images/interior-completion.png" class="interpolation-image" alt="cond_graph"/>
+          </div>
+          <p>
+            Here we present a comparison of our interior completion heuristic as compared to other methods potenitally capable of outputting interior geometry.
+            We find that image-conditioned articulated object generation method SINGAPO can output inteiors well but fails to preserve the geometry of the original input shape, due to its retrieval-based nature. Image-to-3D generative model TRELLIS is not capable of outputting the interiors. 
+            Our heuristic effectively produces the interiors, while preserving the base part geometry due to formulation of our task.
+
+          </p>
+        </div>
           <!--/ Results. -->
       </div>
     </section>
+  
+    
 
 
   <section class="section" id="BibTeX">
