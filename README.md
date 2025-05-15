@@ -63,7 +63,7 @@ We provide checkpoints for the different models at https://huggingface.co/datase
 | PC | [PointGroup](https://github.com/dvlab-research/PointGroup) | minsu3d |  [pg_unet.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_unet.ckpt) | 42.1 | 4.1 |      
 | PC | [Mask3D](https://github.com/JonasSchult/Mask3D) | Mask3D |  [mask3d.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/mask3d.ckpt) | 42.9 | 4.8 |
 | PC | FPNGroup | internal_pg |  [pg_px_fpn.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_px_fpn.ckpt)  | **81.5** | **11.9** |
-| Mesh | [MeshWalker](https://github.com/AlonLahav/MeshWalker) | MeshWalker | [meshwalker.keras](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/meshwalker.keras) | 1.0 | 0.9 |
+| Mesh | [MeshWalker](https://github.com/AlonLahav/MeshWalker) | MeshWalker | [meshwalker.keras](https://huggingface.co/datasets/3dlg-hcvc/s2o/tree/main/ckpts/meshwalker) | 1.0 | 0.9 |
 | Image | [OPDFormer](https://github.com/3dlg-hcvc/OPDMulti) | OPDMulti |  [opdformer_p.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/opdformer_p.pth) | 0.9 |  1.3 |
 
 
