@@ -19,18 +19,24 @@ We develop a three stage pipeline consisting of 1) part segmentation, 2) motion 
 <img src='docs/static/images/teaser.png'/>
 
 ## Installation
-    git clone --recursive git@github.com:3dlg-hcvc/s2o.git
-      
-    conda env create -f environment.yml
+    conda create -n s2o python=3.10 pytorch=1.12.1 torchvision=0.13.1 torchaudio=0.12.1 pytorch-cuda=11.6 -c pytorch -c nvidia
     conda activate s2o
+    conda install gxx_linux-64=9.5.0 -c anaconda
+    conda install openblas-devel -c anaconda
+    git clone git@github.com:NVIDIA/MinkowskiEngine.git
+    cd MinkowskiEngine
+    python setup.py install --blas_include_dirs=${CONDA_PREFIX}/include --blas=openblas
+    pip install -r requirements_minimal.txt
+
+See `environment.yml` for the versions of the missing packages.
 
 Additionally, follow instructions in the submodules you would like to use in order to install required libraries and build some dependencies from source.
 
 ## Data
 
-Data and checkpoints can be found on [HuggingFace](https://huggingface.co/datasets/3dlg-hcvc/s2o). 
+Data and checkpoints can be found on [HuggingFace](https://huggingface.co/datasets/3dlg-hcvc/s2o).
 
-Please request access.  After you are approved, you can download the data with git lfs.
+Please request access. Remember, to authenticate with huggingface-cli. After you are approved, you can download the data with git lfs.
 ```
 git lfs install
 git clone git@hf.co:datasets/3dlg-hcvc/s2o
@@ -38,24 +44,27 @@ git clone git@hf.co:datasets/3dlg-hcvc/s2o
 
 # Running the Static to Openable Pipeline
 
-## Preparing your asset
+## scene-toolkit preliminaries
 
-- [ ] TODO: Add instructions for point sampling a new asset and preparing it for segmentation
+Some of the scipts used for S2O are integrated in [scene-toolkit](https://github.com/smartscenes/sstk). For instance, if you need to obtain connectivity segmentation (i.e. for running the demo), you need to run `node ssc/segment-mesh.js --input <path> --input_type path --format <format> --segmentator_method connectivity --segmentator_format trimesh`.
+
+## Demo
+
+See `pipeline_exp/pipeline_connectivity.py` for the code that runs segmentation and heuristic-based motion prediction, given a mesh as an input.
 
 ## Part Segmentation
 
 We explore different methods (point cloud based, image based, and mesh based) for identifying openable parts and segmenting out the parts from the mesh.  
 
-We provide checkpoints for the different models at https://huggingface.co/datasets/3dlg-hcvc/s2o.  Below we provide a summary of the different models, code directory, and their part segmentation performance.  We recommend using the PointGroup + PointNeXT + FPN model.
+We provide checkpoints for the different models at https://huggingface.co/datasets/3dlg-hcvc/s2o.  Below we provide a summary of the different models, code directory, and their part segmentation performance.  We recommend using the FPNGroup mode, as well as variants of it trained on different data that can be found on our HuggingFace.
 
 | Type | Method | code  | weights |  F1 on PM-Openable | F1 on ACD | 
 |--------|------|-------|-------|-----|----|
-| PC | [PointGroup](https://github.com/dvlab-research/PointGroup) + U-Net | minsu3d |  [pg_unet.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_unet.ckpt) | 21.1 | 4.9 | 
-| PC | [PointGroup](https://github.com/dvlab-research/PointGroup) + [Swin3D](https://github.com/microsoft/Swin3D) | Pointcept |  [pg_swin3d.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_swin3d.pth)  |  29.6 | 9.4 |       
-| PC | [PointGroup](https://github.com/dvlab-research/PointGroup) + [PointNeXT](https://github.com/guochengqian/pointnext) + FPN | internal_pg |  [pg_px_fpn.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_px_fpn.ckpt)  | 78.5 | 13.3 |        
+| PC | [PointGroup](https://github.com/dvlab-research/PointGroup) | minsu3d |  [pg_unet.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_unet.ckpt) | 42.1 | 4.1 |      
 | PC | [Mask3D](https://github.com/JonasSchult/Mask3D) | Mask3D |  [mask3d.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/mask3d.ckpt) | 42.9 | 4.8 |
-| Mesh | [MeshWalker](https://github.com/AlonLahav/MeshWalker) | MeshWalker | [meshwalker.keras](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/meshwalker.keras) | 0.8 | 0.7 |
-| Image | [OPDFormer](https://github.com/3dlg-hcvc/OPDMulti) | OPDMulti |  [opdformer_p.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/opdformer_p.pth) | 18.6 |  7.8 |
+| PC | FPNGroup | internal_pg |  [pg_px_fpn.ckpt](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/pg_px_fpn.ckpt)  | **81.5** | **11.9** |
+| Mesh | [MeshWalker](https://github.com/AlonLahav/MeshWalker) | MeshWalker | [meshwalker.keras](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/meshwalker.keras) | 1.0 | 0.9 |
+| Image | [OPDFormer](https://github.com/3dlg-hcvc/OPDMulti) | OPDMulti |  [opdformer_p.pth](https://huggingface.co/datasets/3dlg-hcvc/s2o/blob/main/ckpts/opdformer_p.pth) | 0.9 |  1.3 |
 
 
 For PC-based methods run:
@@ -64,7 +73,7 @@ For PC-based methods run:
     python scripts/preprocess/create_subset_points.py --data_path {path/to/pcd/downsample.h5} --data_json {path/to/split/json}
     
     # For all PointGroup methods convert to minsu3d format
-    python scripts/preprocess/prepare_for_minsu3d.py --data_path {path/to/pcd-subset/downsample.h5} --data_json {path/to/split/json}
+    python scripts/preprocess/prepare_for_minsu3d.py --data_path {path/to/pcd-subset/downsample.h5} --data_json {path/to/split/json}. For training of FPNGroupMot run scripts/preprocess/prepare_for_minsu3d_w_mot.py instead
     
 Follow submodule instructions for inference. Then, for post-processing and mapping run:
 
@@ -76,17 +85,14 @@ Follow submodule instructions for inference. Then, for post-processing and mappi
     # Map full predictions to mesh, use --gt flag with this script to generate gt for evaluation
     python scripts/postprocess/map_pc_to_mesh.py --{path/to/full/predictions} --data_path {path/to/processed_mesh} --data_json {path/to/split/json} --sampled_data {path/to/pcd/downsample.h5} --output_dir {path/to/mapped/meshes/output}
 
+    # If you want to vote for oversegments rather than triangles during propagation, use scripts/postprocess/map_pc_to_mesh_connectivity.py instead (recommended).
+
 ## Motion prediction
 
 To run heuristic motion prediction:
-
     python motion_inference.py --pred_path {path/to/mapped/meshes/output} --output_path {path/to/mapped/meshes/output/motion} --export
 
-## Interior Completion
-
-- [ ] TODO: Provide instructions for interior completion
-- [ ] TODO: Provide instructions for exporting articulated mesh as GLB / URDF
-- [ ] TODO: Provide instructions for visualizing articulated mesh
+If obtained the motion predictions from FPNGroupMot, run post-processing with `scripts/postprocess/postprocess_fpngroupmot_motion.py`.
 
 
 # Reproducing Experiments
@@ -103,9 +109,13 @@ PC metrics are obtained from minsu3d eval.py and OC-cost demo.py, follow the ins
     # For motion evaluation
     python motion_eval.py --predict_dir {path/to/mapped/meshes/output} --output_dir {dir/for/logged/metrics} --data_json {path/to/split/json} --glb_path {path/to/processed_mesh}
 
+    # For interior evaluation
+    python eval_interior_completion.py --predict_dir {path/to/meshes/with/completed/interiors} --gt_path {path/to/meshes/with/gt/interiors} --data_json {path/to/split/json} --output_dir {dir/for/logged/metrics}
+
+
 ## Training 
 
-- [ ] TODO: Provide training instructions
+See documentation of the corresponding submodules desired to train.
     
 ## Citation
 Please cite our work if you use S2O results/code or ACD dataset.
