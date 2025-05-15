@@ -17,8 +17,8 @@ if __name__ == "__main__":
 
     splits = ["val"]
 
-    downsample_data = h5py.File(f"{args.data_path}/downsample.h5", "a")
-    data_name = args.data_path.split("/")[-1]
+    downsample_data = h5py.File(f"{args.data_path}", "a")
+    data_name = args.data_path.split("/")[-1].split(".")[0]
 
     if "n_points" in downsample_data.keys():
         n_points = downsample_data["n_points"]
@@ -38,11 +38,11 @@ if __name__ == "__main__":
     for i in range(num_models):
         model_idx_map[downsample_model_ids[i].decode("utf-8")] = i
 
-    os.makedirs(f"../../{data_name}/metadata")
+    os.makedirs(f"../../minsu3d/data/{data_name}/metadata/{data_name}/metadata")
 
     for split in splits:
 
-        with open(f"../../minsu3d/data/{data_name}/metadata/partnetsim_{split}.txt", "w+") as f:
+        with open(f"../../minsu3d/data/{data_name}/metadata/{split}.txt", "w+") as f:
             for model_id in splits_data[split].keys():
                 f.write(f"{str(model_id)}\n")
             f.truncate(f.tell() - len(os.linesep))

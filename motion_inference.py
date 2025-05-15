@@ -129,6 +129,8 @@ if __name__ == "__main__":
     for model_id in model_ids:
         print(model_id)
         ins_paths = glob.glob(f"{args.pred_path}/pcd/{model_id}-*.npz")
+        if len(ins_paths) == 0:
+            continue
         parts = parseIns(ins_paths)
         hierarchy_engine = HierarchyEngine(predictors=[RuleHierarchyPredictor()])
         hier_parts = hierarchy_engine.process(parts)

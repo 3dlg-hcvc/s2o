@@ -56,14 +56,17 @@ if __name__ == "__main__":
     os.makedirs(f"{args.output_path}/pred_mask", exist_ok=True)
     os.makedirs(f"{args.output_path}/predicted_masks", exist_ok=True)
 
-    original_h5 = h5py.File(f"{args.data_path}/downsample.h5", "r")
-    subset_h5 = h5py.File(f"{args.subset_path}/downsample.h5", "r")
+    original_h5 = h5py.File(f"{args.data_path}", "r")
+    subset_h5 = h5py.File(f"{args.subset_path}", "r")
 
     model_idx_map = {}
     for i, id in enumerate(subset_h5["model_ids"]):
         model_idx_map[id.decode("utf-8")] = i
 
-    args.predict_dir = f"{args.exp_dir}/inference/val/predictions/instance"
+    if os.path.exists(f"{args.exp_dir}/inference/val/predictions/instance"):
+        args.predict_dir = f"{args.exp_dir}/inference/val/predictions/instance"
+    else:
+        args.predict_dir = f"{args.exp_dir}"
 
     model_ids = [path.split('/')[-1].split('.')[0] for path in glob.glob(f"{args.predict_dir}/*.txt")]
 
@@ -73,6 +76,9 @@ if __name__ == "__main__":
         with open(f"{args.predict_dir}/{model_id}.txt", "r") as f:
             lines = f.readlines()
 
+        if model_id not in model_idx_map:
+            print(f"Model {model_id} not in subset")
+            continue
         subset_points = subset_h5["points"][model_idx_map[model_id]]
         original_points = original_h5["points"][model_idx_map[model_id]].reshape([original_h5["n_points"][model_idx_map[model_id]], 3])
         fps_mask = np.asarray(subset_h5["fps_mask"][model_idx_map[model_id]], dtype=int)

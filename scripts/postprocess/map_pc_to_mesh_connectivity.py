@@ -37,6 +37,7 @@ S2O_SEM_REF = {"drawer": 0,
                "lid": 2,
                "base": 3}
 
+
 def sample_and_export_points(trimesh_mesh, triangle_instance_mask, pred_inst_triangle_map, args):
     for instance_id, instance_dict in pred_inst_triangle_map.items():
         if not instance_id in triangle_instance_mask:
@@ -127,7 +128,6 @@ def generate_gt(args):
         data = json.load(f)
 
     for model_id in tqdm(data[args.split].keys()):
-        args.id = model_id
         gltf = pygltk.load(f"{args.data_path}/{model_id}/{model_id}.glb")
         gltf.load_stk_segmentation_openable(f"{args.data_path}/{model_id}/{model_id}.art-stk.json")
         face_colors = []
@@ -182,84 +182,86 @@ def generate_gt(args):
 
 
 def map_single_mesh(args, face_indices, vertex_ids):
-    if os.path.exists(f"{args.predict_dir}/{args.id}.txt"):
-        with open(f"{args.predict_dir}/{args.id}.txt", 'r') as f:
-            pred = f.readlines()
-        pred = [line.strip().split(' ') for line in pred]
-        masks = {}
-        all_masks = None
-        base_pred_idx = -1
-        for idx, pred_line in enumerate(pred):
-            mask_path = pred_line[0]
-            mask_semantic = int(pred_line[1])
-            if mask_semantic == 3 and base_pred_idx == -1:
-                base_pred_idx = idx
-            mask_conf = float(pred_line[2])
-            mask = np.loadtxt(f"{args.predict_dir}/{mask_path}")
-            mask = mask.astype(np.int32)
-            masks[idx] = {'conf': mask_conf, 'semantic': mask_semantic}
-            if all_masks is None:
-                all_masks = mask * idx
-            else:
-                all_masks[mask == 1] = idx
+    with open(f"{args.predict_dir}/{args.id}.txt", 'r') as f:
+        pred = f.readlines()
+    pred = [line.strip().split(' ') for line in pred]
+    masks = {}
+    all_masks = None
+    base_pred_idx = -1
+    for idx, pred_line in enumerate(pred):
+        mask_path = pred_line[0]
+        mask_semantic = int(pred_line[1])
+        if mask_semantic == 3 and base_pred_idx == -1:
+            base_pred_idx = idx
+        mask_conf = float(pred_line[2])
+        mask = np.loadtxt(f"{args.predict_dir}/{mask_path}")
+        mask = mask.astype(np.int32)
+        masks[idx] = {'conf': mask_conf, 'semantic': mask_semantic}
+        if all_masks is None:
+            all_masks = mask * idx
+        else:
+            all_masks[mask == 1] = idx
 
-        mapped_faces = -np.ones(len(gltf.faces), dtype=np.int32)
-        for face_idx in range(len(gltf.faces)):
-            face_preds = all_masks[face_indices == face_idx]
-            vertex_preds = []
+    precomputed_segment_faces_map = {}
+    for precomputed_idx in np.unique(gltf.precomputed_segmentation_map):
+        precomputed_segment_faces_map[precomputed_idx] = gltf.precomputed_segmentation_map == precomputed_idx
+
+    mapped_faces = -np.ones(len(gltf.faces), dtype=np.int32)
+    for precomputed_idx, face_mask in precomputed_segment_faces_map.items():
+        aggregated_face_mask = np.zeros_like(all_masks, dtype=np.bool_)
+        for face_idx in np.where(face_mask)[0]:
+            aggregated_face_mask = np.logical_or(aggregated_face_mask, face_indices == face_idx)
+        face_preds = all_masks[aggregated_face_mask]
+        face_idxs = np.where(face_mask)[0]
+        vertex_preds = []
+        for face_idx in face_idxs:
             for vertex_id in gltf.faces[face_idx]:
                 vertex_preds.extend(all_masks[vertex_ids == vertex_id])
-            preds = np.concatenate([face_preds, vertex_preds])
-            most_common_count = np.bincount(preds).max()
-            most_common_preds = np.where(np.bincount(preds) == most_common_count)[0]
-            if len(most_common_preds) == 1:
-                most_common_pred = most_common_preds[0]
-            else:
-                most_common_pred = most_common_preds[0]
-                for pred in most_common_preds:
-                    if masks[pred]['conf'] > masks[most_common_pred]['conf']:
-                        most_common_pred = pred
-            mapped_faces[face_idx] = most_common_pred
-        mapped_faces[mapped_faces == -1] = base_pred_idx
+        preds = np.concatenate([face_preds, vertex_preds])
+        most_common_count = np.bincount(preds).max()
+        most_common_preds = np.where(np.bincount(preds) == most_common_count)[0]
+        if len(most_common_preds) == 1:
+            most_common_pred = most_common_preds[0]
+        else:
+            most_common_pred = most_common_preds[0]
+            for pred in most_common_preds:
+                if masks[pred]['conf'] > masks[most_common_pred]['conf']:
+                    most_common_pred = pred
+        mapped_faces[face_mask] = most_common_pred
+    mapped_faces[mapped_faces == -1] = base_pred_idx
 
-        face_colors = []
-        if args.mode == 'instance':
-            num_instances = np.unique(mapped_faces).shape[0]
-            # Generate palette with sns
-            palette = sns.color_palette("husl", n_colors=num_instances)
-            instance_color_map = {instance: palette[instance] for instance in np.unique(mapped_faces)}
-        elif args.mode == 'semantic':
-            # Use PARTNETSIM_COLOR_MAP as base color and generate subcolors based on number of instances of each semantic class
-            palette = [None, None, None, None]
-            sem_inst_counters = [0, 0, 0]
-            for inst in np.unique(mapped_faces):
-                sem_label = masks[inst]['semantic']
-                if sem_label != 3:
-                    sem_inst_counters[sem_label] += 1
-            for idx, sem_inst_count in enumerate(sem_inst_counters):
-                if sem_inst_count > 0:
-                    palette[idx] = sns.light_palette(S2O_COLOR_MAP_HEX[idx], n_colors=sem_inst_count + 1)[1:]
-            palette[3] = sns.light_palette(S2O_COLOR_MAP_HEX[3], n_colors=2)[1:]
-            instance_color_map = {}
-            for instance in np.unique(mapped_faces):
-                sem_label = masks[instance]['semantic']
-                if sem_label == 3:
-                    instance_color_map[instance] = palette[3][0]
-                else:
-                    sem_inst_counters[sem_label] -= 1
-                    instance_color_map[instance] = palette[sem_label][sem_inst_counters[sem_label]]
-        semantic_map = []
+    face_colors = []
+    if args.mode == 'instance':
+        num_instances = np.unique(mapped_faces).shape[0]
+        # Generate palette with sns
+        palette = sns.color_palette("husl", n_colors=num_instances)
+        instance_color_map = {instance: palette[instance] for instance in np.unique(mapped_faces)}
+    elif args.mode == 'semantic':
+        # Use PARTNETSIM_COLOR_MAP as base color and generate subcolors based on number of instances of each semantic class
+        palette = [None, None, None, None]
         sem_inst_counters = [0, 0, 0]
-        for face_idx in range(len(gltf.faces)):
-            semantic_label = masks[mapped_faces[face_idx]]['semantic']
-            semantic_map.append(semantic_label)
-            face_colors.append(instance_color_map[mapped_faces[face_idx]])
-    else:
-        face_colors = np.array([S2O_COLOR_MAP[3]] * len(gltf.faces))
-        semantic_map = np.array([3] * len(gltf.faces))
-        mapped_faces = np.array([0] * len(gltf.faces))
-        masks = {0: {"semantic": 3, "conf": 1.0}}
-
+        for inst in np.unique(mapped_faces):
+            sem_label = masks[inst]['semantic']
+            if sem_label != 3:
+                sem_inst_counters[sem_label] += 1
+        for idx, sem_inst_count in enumerate(sem_inst_counters):
+            if sem_inst_count > 0:
+                palette[idx] = sns.light_palette(S2O_COLOR_MAP_HEX[idx], n_colors=sem_inst_count + 1)[1:]
+        palette[3] = sns.light_palette(S2O_COLOR_MAP_HEX[3], n_colors=2)[1:]
+        instance_color_map = {}
+        for instance in np.unique(mapped_faces):
+            sem_label = masks[instance]['semantic']
+            if sem_label == 3:
+                instance_color_map[instance] = palette[3][0]
+            else:
+                sem_inst_counters[sem_label] -= 1
+                instance_color_map[instance] = palette[sem_label][sem_inst_counters[sem_label]]
+    semantic_map = []
+    sem_inst_counters = [0, 0, 0]
+    for face_idx in range(len(gltf.faces)):
+        semantic_label = masks[mapped_faces[face_idx]]['semantic']
+        semantic_map.append(semantic_label)
+        face_colors.append(instance_color_map[mapped_faces[face_idx]])
 
     mesh = gltf.create_colored_trimesh(np.array(face_colors))
     nonindexed_mesh = save_nonindexed_geometry(mesh, f"{args.output_dir}/obj/{args.id}.obj")
@@ -324,8 +326,9 @@ if __name__ == "__main__":
             for model_id in tqdm(data[args.split].keys()):
                 gltf = pygltk.load(f"{args.data_path}/{model_id}/{model_id}.glb")
                 gltf.load_stk_segmentation_openable(f"{args.data_path}/{model_id}/{model_id}.art-stk.json")
+                gltf.load_stk_precomputed_segmentation_flattened(f"{args.data_path}/{model_id}/{model_id}.connectivity.segs.json", mapping_path=f"{args.data_path}/{model_id}/{model_id}.meshIndex.json")
                 idx = model_id_idx_map[model_id]
-                face_indices = np.asarray(f['pygltk_face_indexes'][idx]) if "pygltk_face_indexes" in f else np.asarray(f['face_indexes'][idx])
+                face_indices = np.asarray(f['pygltk_face_indexes'][idx])
                 vertex_ids = np.asarray(f['vertex_ids'][idx])
                 args.id = model_id
                 map_single_mesh(args, face_indices, vertex_ids)
